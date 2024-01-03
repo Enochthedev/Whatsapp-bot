@@ -1,6 +1,7 @@
 const qrcode = require('qrcode-terminal');
 const { Client, RemoteAuth } = require('whatsapp-web.js');
 const { MongoStore } = require('wwebjs-mongo');
+const commands = require('./command/command');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -34,16 +35,20 @@ try{
         client.initialize();
 
         ///commands
-        client.on('message', message => {
-            if(message.body === '!ping') {
-                message.reply('pong');
-            }
-        });  
-        client.on('message', message => {
-            if(message.body === '!hello') {
-                message.reply('world');
+        client.on('message', async (message) => {
+            const commandName = message.body.slice(1); // Extract command name from message
+            const commandHandler = commands[commandName];
+        
+            if (commandHandler) {
+                try {
+                    await commandHandler(message);
+                } catch (error) {
+                    console.error('Error handling command:', error);
+                    await message.reply('Something went wrong. Please try again later.');
+                }
             }
         });
+
     });
 }catch(err){
     console.log(err)
