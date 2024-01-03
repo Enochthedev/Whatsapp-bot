@@ -24,7 +24,9 @@ try{
             qrcode.generate(qr, {small: true});
         });
 
+        
         client.on('remote_session_saved', () => {
+            
             console.log('Session saved successfully to remote store!');
         });
 
