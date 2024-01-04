@@ -38,7 +38,7 @@ Violations of these guidelines may result in consequences, including being repor
 
 ## Reporting and Enforcement
 
-If you witness or experience any behavior that violates this code of conduct, please report it to the [project maintainers](link-to-maintainers-list). All reports will be treated with confidentiality and will be promptly addressed.
+If you witness or experience any behavior that violates this code of conduct, please report it to the [project maintainers](#project-maintainers). All reports will be treated with confidentiality and will be promptly addressed.
 
 Violations of the code of conduct may result in temporary or permanent exclusion from the project, as determined by the project maintainers.
 
