@@ -1,11 +1,22 @@
 const qrcode = require('qrcode-terminal');
 const { Client, RemoteAuth } = require('whatsapp-web.js');
 const { MongoStore } = require('wwebjs-mongo');
-const commands = require('./command/command');
+const basicCommands = require('./commands/basic.command');
+//const advancedCommands = require('./commands/advanced.command');
+//const modCommands = require('./commands/mod.command');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-console.log(process.env.MONGODB_URI)
+
+const commands = {
+    ...basicCommands,
+    // ...advancedCommands, --- this command section is still in development
+    // ...adminCommands --- this command section is still in development
+    // ...modCommands --- this command section is still in development
+};
+
+
+//console.log(process.env.MONGODB_URI) testing env variables
 try{
     mongoose.connect(process.env.MONGODB_URI).then(() => {
         const store = new MongoStore({ mongoose: mongoose });
