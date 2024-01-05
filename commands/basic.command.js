@@ -53,6 +53,8 @@ const tagAll = async (message) => {
     }
 }
 
+
+
 // command boilerplate
 // const command = async (message) => {
 //     try {
