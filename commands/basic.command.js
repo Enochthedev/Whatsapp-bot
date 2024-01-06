@@ -53,7 +53,42 @@ const tagAll = async (message) => {
     }
 }
 
-
+const customGreetings = async (message) => {
+    try {
+        const randomGreetings ={
+            'How far boss!': 'How far boss!',
+            'Agba dev na you o!': 'Agba dev na you o!',
+            'Hello boss!': 'Hello boss!',
+        }
+        const chat = await msg.getChat();
+        const contact = await msg.getContact();
+        //cycle through random greetings
+        const randomGreeting = randomGreetings[Math.floor(Math.random() * randomGreetings.length)];
+        await chat.sendMessage(`${randomGreeting} @${contact.id.user}`);
+        if (msg.hasQuotedMsg) {
+            const quotedMsg = await msg.getQuotedMessage();
+            const quotedContact = await quotedMsg.getContact();
+            await chat.sendMessage(`Hello @${quotedContact.id.user}`);
+        }
+        // await chat.sendMessage(`Hello @${contact.id.user}`, {
+        //         mentions: [contact]
+        //     });
+    } catch (error) {
+        console.error('Error tagging all:', error);
+        await message.reply('Failed to tag all. Please try again later.');
+    }
+}
+const copyMe = async (message) => {
+    try {
+        const chat = await message.getChat();
+        //remove the keyword from the message and send the rest
+        const messageToSend = message.body.slice(9);
+        await chat.sendMessage(messageToSend);
+    } catch (error) {
+        console.error('Error copying message:', error);
+        await message.reply('Failed to copy message. Please try again later.');
+    }
+}
 
 // command boilerplate
 // const command = async (message) => {
@@ -71,6 +106,8 @@ module.exports = {
     helloworld,
     admin,
     commands,
-    tagAll
+    tagAll,
+    customGreetings,
+    copyMe
     // Add more commands here as needed
 };
