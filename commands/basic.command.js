@@ -43,10 +43,13 @@ const commands = async (message) => {
 
 const tagAll = async (message) => {
     try {
-        const chat = await message.getChat();
-        const participants = chat.participants;
-        const mentions = participants.map(participant => participant.mention()).join(' ');
-        await message.reply(mentions);
+        await client.getGroupMetaData(message.chatId).then(async (groupData) => {
+            let members = [];
+            for (i = 0; i < groupData.participants.length; i++) {
+                members.push(groupData.participants[i].id.user);
+            }
+            await message.reply(members.join('\n'));
+        });
     } catch (error) {
         console.error('Error tagging all:', error);
         await message.reply('Failed to tag all. Please try again later.');
