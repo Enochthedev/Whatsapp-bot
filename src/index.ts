@@ -8,6 +8,9 @@ import { commandHandler } from './commands/handler';
 import { basicCommands } from './commands/basic';
 import { advancedCommands } from './commands/advanced';
 import { moderatorCommands } from './commands/moderator';
+import { utilityCommands } from './commands/utility';
+import { funCommands } from './commands/fun';
+import { adminCommands } from './commands/admin';
 import { AutomationScheduler } from './automation/scheduler';
 import { getAnnouncementChatId } from './utils/chat.utils';
 import { scheduleService } from './services/schedule.service';
@@ -122,10 +125,19 @@ function registerCommands(): void {
     ...basicCommands,
     ...advancedCommands,
     ...moderatorCommands,
+    ...utilityCommands,
+    ...funCommands,
+    ...adminCommands,
   ]);
 
   const allCommands = commandHandler.getCommands();
   console.log(`✅ Registered ${allCommands.length} commands`);
+  console.log(
+    `   - Basic: ${basicCommands.length + utilityCommands.length + funCommands.length}`
+  );
+  console.log(`   - Advanced: ${advancedCommands.length}`);
+  console.log(`   - Moderator: ${moderatorCommands.length}`);
+  console.log(`   - Admin: ${adminCommands.length}`);
 }
 
 /**
