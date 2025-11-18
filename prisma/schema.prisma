@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+model User {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  phoneNumber    String   @unique
+  name           String?
+  numberOfStrikes Int     @default(0)
+  isAdmin        Boolean  @default(false)
+  isModerator    Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Schedule {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  chatId         String
+  message        String
+  cronExpression String
+  timezone       String   @default("Africa/Lagos")
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("schedules")
+}
+
+model Command {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @unique
+  description String
+  category    String   // basic, advanced, moderator, admin
+  isEnabled   Boolean  @default(true)
+  usageCount  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("commands")
+}
