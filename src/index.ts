@@ -147,14 +147,11 @@ async function initializeAutomation(): Promise<void> {
   try {
     console.log('⚙️ Initializing automation system...');
 
-    // Get announcement chat ID
-    const announcementChatId = await getAnnouncementChatId(client, env.ANNOUNCEMENT_CHAT_NAME);
+    // Auto-detect announcement chat
+    const announcementChatId = await getAnnouncementChatId(client);
 
     if (!announcementChatId) {
-      console.warn(
-        `⚠️ Announcement chat "${env.ANNOUNCEMENT_CHAT_NAME}" not found. Skipping automation setup.`
-      );
-      console.warn('   Add the bot to the announcement chat and restart to enable automation.');
+      // Bot continues without scheduled messages - warning already logged
       return;
     }
 
